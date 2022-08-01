@@ -28,7 +28,7 @@ Hi, I’m Marikit, and I’m in my final year of my Bachelor of Science, majorin
 
 # Planning
 We have created a simple plan of how we plan to develop our application in the form of a gantt chart using Trello. A screenshot of our plan is included below:
-![Project plan](https://github.com/damienmiller51/cosc345project/blob/main/chart.png?raw=true)
+![Project plan](https://github.com/damienmiller51/cosc345project/blob/master/chart.png?raw=true)
 
 # Risk Analysis
 | Risk                                                                                                       | Likelihood | Impact | Risk value of exposure (likelihood * impact) | Mitigation                                                                                                                                                                                    |
