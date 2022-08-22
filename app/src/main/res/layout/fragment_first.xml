@@ -6,23 +6,40 @@
     android:layout_height="match_parent"
     tools:context=".FirstFragment">
 
-    <TextView
-        android:id="@+id/textview_first"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_first_fragment"
-        app:layout_constraintBottom_toTopOf="@id/button_first"
+    <CalendarView
+        android:id="@+id/mainCalendar"
+        android:layout_width="350dp"
+        android:layout_height="338dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="138dp"
+        android:layout_marginEnd="31dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/button_first"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/next"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <TextView
+        android:id="@+id/name_title"
+        android:layout_width="165dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="123dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="123dp"
+        android:text="Dayversify"
+        android:textSize="34sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textview_first" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/home_calendar_label"
+        android:layout_width="250dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="113dp"
+        android:layout_marginEnd="81dp"
+        android:text="Choose a day from the calendar below!"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
