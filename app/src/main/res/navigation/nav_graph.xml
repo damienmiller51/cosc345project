@@ -25,4 +25,14 @@
             android:id="@+id/action_AnalyticsFragment_to_HomeFragment"
             app:destination="@id/HomeFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/SettingsFragment"
+        android:name="com.example.cosc345project.SettingsFragment"
+        android:label="@string/settings_fragment_label"
+        tools:layout="@layout/settings_fragment">
+
+        <action
+            android:id="@+id/action_SettingsFragment_to_HomeFragment"
+            app:destination="@id/HomeFragment" />
+    </fragment>
 </navigation>

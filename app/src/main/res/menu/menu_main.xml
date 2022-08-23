@@ -15,7 +15,7 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/action_item_Settings"
+        android:id="@+id/action_item_settings"
         android:title="@+id/settings_fragment_label"
         android:icon="@drawable/ic_action_settings"
         app:showAsAction="ifRoom" />

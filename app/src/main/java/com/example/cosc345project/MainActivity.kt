@@ -48,13 +48,15 @@ class MainActivity : AppCompatActivity() {
             navController.navigate(R.id.HomeFragment)
         if(id == R.id.action_item_analytics)
             navController.navigate(R.id.AnalyticsFragment)
+        if(id == R.id.action_item_settings)
+            navController.navigate(R.id.SettingsFragment)
 
 
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
-            R.id.action_item_Settings -> true
+            R.id.action_item_settings -> true
             R.id.action_item_analytics -> true
             R.id.action_item_home -> true
             else -> super.onOptionsItemSelected(item)

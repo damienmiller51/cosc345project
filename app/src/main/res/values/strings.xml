@@ -6,6 +6,10 @@
     <string name="home_fragment_label">Home</string>
     <string name="home_calendar_label">Choose a day from the calendar below!</string>
     <string name="date_label">Selected date:</string>
+    <string name="home_sleep_label">Hours of sleep:</string>
+    <string name="home_step_label">Steps:</string>
+    <string name="home_modify_button">Update</string>
+    <string name="home_sleep_entry_label">How many hours of sleep did you get?</string>
 
     <!-- Analytics page strings -->
     <string name="analytics_fragment_label">Analytics</string>

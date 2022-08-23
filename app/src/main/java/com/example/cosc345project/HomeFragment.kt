@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.CalendarView
 import androidx.fragment.app.Fragment
 import com.example.cosc345project.databinding.HomeFragmentBinding
+import com.google.android.material.slider.Slider
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -57,10 +58,58 @@ class HomeFragment : Fragment() {
             //format the selected date and update the label accordingly
             binding.homeDate.text = sb.toString()
         }
+
+        binding.homeSleepButton.setOnClickListener() {
+            loadSleepInput();
+        }
+
+        binding.homeStepButton.setOnClickListener() {
+            loadStepInput();
+        }
+
+        //touch listener for our slider
+        binding.sleepSlider.addOnSliderTouchListener(object: Slider.OnSliderTouchListener {
+            //required for abstract class
+            override fun onStartTrackingTouch(slider: Slider) {
+
+            }
+
+            //when a value is selected, hide the input
+            override fun onStopTrackingTouch(slider: Slider) {
+                hideSleepInput()
+
+                //update the sleep hours display
+                binding.homeSleepData.text = slider.value.toString();
+            }
+        })
+
+        binding.sleepSlider.addOnChangeListener() { slider, value, fromUSer ->
+            //update the display
+            binding.sleepDisplay.text = slider.value.toString();
+        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
+    //load the ui for sleep input
+    fun loadSleepInput() {
+        binding.inputLayout.visibility = View.GONE
+        binding.sleepEntry.visibility = View.VISIBLE
+    }
+
+    //hide the ui for sleep input
+    fun hideSleepInput() {
+        binding.inputLayout.visibility = View.VISIBLE
+        binding.sleepEntry.visibility = View.GONE
+    }
+
+    //load the ui for step input
+    fun loadStepInput() {
+        //binding.titleLayout.visibility = View.VISIBLE
+    }
+
+
 }
