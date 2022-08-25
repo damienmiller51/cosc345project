@@ -2,14 +2,18 @@ package com.example.cosc345project
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
+import android.view.View.OnTouchListener
 import android.view.ViewGroup
 import android.widget.CalendarView
 import androidx.fragment.app.Fragment
 import com.example.cosc345project.databinding.HomeFragmentBinding
 import com.google.android.material.slider.Slider
+import it.beppi.knoblibrary.Knob.OnStateChanged
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -60,11 +64,11 @@ class HomeFragment : Fragment() {
         }
 
         binding.homeSleepButton.setOnClickListener() {
-            loadSleepInput();
+            loadSleepInput()
         }
 
         binding.homeStepButton.setOnClickListener() {
-            loadStepInput();
+            loadStepInput()
         }
 
         //touch listener for our slider
@@ -79,14 +83,25 @@ class HomeFragment : Fragment() {
                 hideSleepInput()
 
                 //update the sleep hours display
-                binding.homeSleepData.text = slider.value.toString();
+                binding.homeSleepData.text = slider.value.toString()
             }
         })
 
         binding.sleepSlider.addOnChangeListener() { slider, value, fromUSer ->
             //update the display
-            binding.sleepDisplay.text = slider.value.toString();
+            binding.sleepDisplay.text = (slider.value).toString()
         }
+
+        binding.stepsKnob.setOnStateChanged(OnStateChanged {
+            binding.stepDisplay.text = (binding.stepsKnob.state*1000).toString()
+        })
+
+        binding.homeSubmitSteps.setOnClickListener() {
+            //update the display
+            binding.homeStepData.text = binding.stepDisplay.text
+            hideStepInput()
+        }
+
     }
 
     override fun onDestroyView() {
@@ -108,8 +123,13 @@ class HomeFragment : Fragment() {
 
     //load the ui for step input
     fun loadStepInput() {
-        //binding.titleLayout.visibility = View.VISIBLE
+        binding.inputLayout.visibility = View.GONE
+        binding.stepEntry.visibility = View.VISIBLE
     }
 
+    fun hideStepInput() {
+        binding.inputLayout.visibility = View.VISIBLE
+        binding.stepEntry.visibility = View.GONE
+    }
 
 }
