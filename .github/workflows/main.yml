@@ -26,6 +26,9 @@ jobs:
           
       - name: Make gradlew executable
         run: chmod +x ./gradlew
+        
+      - name: Generate Dokka documentation
+        run: ./gradlew dokkaHtml 
 
       - name: Build Gradle
         run: ./gradlew build
