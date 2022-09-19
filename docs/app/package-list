@@ -1,0 +1,31 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+$dokka.location:com.example.cosc345project////PointingToDeclaration/app/com.example.cosc345project/index.html
+$dokka.location:com.example.cosc345project/AnalyticsFragment///PointingToDeclaration/app/com.example.cosc345project/-analytics-fragment/index.html
+$dokka.location:com.example.cosc345project/AnalyticsFragment/AnalyticsFragment/#/PointingToDeclaration/app/com.example.cosc345project/-analytics-fragment/-analytics-fragment.html
+$dokka.location:com.example.cosc345project/AnalyticsFragment/onCreateView/#android.view.LayoutInflater#android.view.ViewGroup?#android.os.Bundle?/PointingToDeclaration/app/com.example.cosc345project/-analytics-fragment/on-create-view.html
+$dokka.location:com.example.cosc345project/AnalyticsFragment/onDestroyView/#/PointingToDeclaration/app/com.example.cosc345project/-analytics-fragment/on-destroy-view.html
+$dokka.location:com.example.cosc345project/AnalyticsFragment/onViewCreated/#android.view.View#android.os.Bundle?/PointingToDeclaration/app/com.example.cosc345project/-analytics-fragment/on-view-created.html
+$dokka.location:com.example.cosc345project/HomeFragment///PointingToDeclaration/app/com.example.cosc345project/-home-fragment/index.html
+$dokka.location:com.example.cosc345project/HomeFragment/HomeFragment/#/PointingToDeclaration/app/com.example.cosc345project/-home-fragment/-home-fragment.html
+$dokka.location:com.example.cosc345project/HomeFragment/hideSleepInput/#/PointingToDeclaration/app/com.example.cosc345project/-home-fragment/hide-sleep-input.html
+$dokka.location:com.example.cosc345project/HomeFragment/hideStepInput/#/PointingToDeclaration/app/com.example.cosc345project/-home-fragment/hide-step-input.html
+$dokka.location:com.example.cosc345project/HomeFragment/loadSleepInput/#/PointingToDeclaration/app/com.example.cosc345project/-home-fragment/load-sleep-input.html
+$dokka.location:com.example.cosc345project/HomeFragment/loadStepInput/#/PointingToDeclaration/app/com.example.cosc345project/-home-fragment/load-step-input.html
+$dokka.location:com.example.cosc345project/HomeFragment/onCreateView/#android.view.LayoutInflater#android.view.ViewGroup?#android.os.Bundle?/PointingToDeclaration/app/com.example.cosc345project/-home-fragment/on-create-view.html
+$dokka.location:com.example.cosc345project/HomeFragment/onDestroyView/#/PointingToDeclaration/app/com.example.cosc345project/-home-fragment/on-destroy-view.html
+$dokka.location:com.example.cosc345project/HomeFragment/onViewCreated/#android.view.View#android.os.Bundle?/PointingToDeclaration/app/com.example.cosc345project/-home-fragment/on-view-created.html
+$dokka.location:com.example.cosc345project/HomeFragment/sdf/#/PointingToDeclaration/app/com.example.cosc345project/-home-fragment/sdf.html
+$dokka.location:com.example.cosc345project/HomeFragment/selectedDate/#/PointingToDeclaration/app/com.example.cosc345project/-home-fragment/selected-date.html
+$dokka.location:com.example.cosc345project/MainActivity///PointingToDeclaration/app/com.example.cosc345project/-main-activity/index.html
+$dokka.location:com.example.cosc345project/MainActivity/MainActivity/#/PointingToDeclaration/app/com.example.cosc345project/-main-activity/-main-activity.html
+$dokka.location:com.example.cosc345project/MainActivity/onCreateOptionsMenu/#android.view.Menu/PointingToDeclaration/app/com.example.cosc345project/-main-activity/on-create-options-menu.html
+$dokka.location:com.example.cosc345project/MainActivity/onOptionsItemSelected/#android.view.MenuItem/PointingToDeclaration/app/com.example.cosc345project/-main-activity/on-options-item-selected.html
+$dokka.location:com.example.cosc345project/MainActivity/onSupportNavigateUp/#/PointingToDeclaration/app/com.example.cosc345project/-main-activity/on-support-navigate-up.html
+$dokka.location:com.example.cosc345project/SettingsFragment///PointingToDeclaration/app/com.example.cosc345project/-settings-fragment/index.html
+$dokka.location:com.example.cosc345project/SettingsFragment/SettingsFragment/#/PointingToDeclaration/app/com.example.cosc345project/-settings-fragment/-settings-fragment.html
+$dokka.location:com.example.cosc345project/SettingsFragment/onCreateView/#android.view.LayoutInflater#android.view.ViewGroup?#android.os.Bundle?/PointingToDeclaration/app/com.example.cosc345project/-settings-fragment/on-create-view.html
+$dokka.location:com.example.cosc345project/SettingsFragment/onDestroyView/#/PointingToDeclaration/app/com.example.cosc345project/-settings-fragment/on-destroy-view.html
+$dokka.location:com.example.cosc345project/SettingsFragment/onViewCreated/#android.view.View#android.os.Bundle?/PointingToDeclaration/app/com.example.cosc345project/-settings-fragment/on-view-created.html
+com.example.cosc345project
+
