@@ -18,7 +18,7 @@ import java.util.*
 
 
 /**
- * A simple [Fragment] subclass as the default destination in the navigation.
+ * The fragment class containing the framework for the Home page. The default destination for the app.
  */
 class HomeFragment : Fragment() {
 

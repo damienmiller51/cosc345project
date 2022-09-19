@@ -7,6 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.cosc345project.databinding.SettingsFragmentBinding
 
+/**
+ * The fragment class containing the framework for the Settings page.
+ */
 class SettingsFragment : Fragment() {
     private var _binding: SettingsFragmentBinding? = null
 

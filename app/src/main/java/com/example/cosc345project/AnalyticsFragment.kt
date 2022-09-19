@@ -9,7 +9,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.cosc345project.databinding.AnalyticsFragmentBinding
 
 /**
- * A simple [Fragment] subclass as the second destination in the navigation.
+ * The fragment class containing the framework for the Analytics page.
  */
 class AnalyticsFragment : Fragment() {
 
