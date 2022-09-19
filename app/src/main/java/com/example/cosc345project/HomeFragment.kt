@@ -1,5 +1,6 @@
 package com.example.cosc345project
 
+import android.content.Context.MODE_PRIVATE
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -12,6 +13,7 @@ import com.example.cosc345project.databinding.HomeFragmentBinding
 import com.google.android.material.slider.Slider
 import it.beppi.knoblibrary.Knob.OnStateChanged
 import java.text.SimpleDateFormat
+import java.time.LocalDateTime
 import java.util.*
 
 
@@ -19,6 +21,11 @@ import java.util.*
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
 class HomeFragment : Fragment() {
+
+    //date formatter
+    val sdf = SimpleDateFormat("dd/MM/yyyy")
+
+    var selectedDate = sdf.format(Date()).replace("/", "")
 
     private var _binding: HomeFragmentBinding? = null
 
@@ -39,13 +46,23 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //date formatter
-        val sdf = SimpleDateFormat("dd/MM/yyyy")
-
         //set the label to the current day
         val sb = StringBuilder()
         sb.append(getString(R.string.date_label)).append(" ").append(sdf.format(binding.mainCalendar.date))
         binding.homeDate.text = sb.toString()
+
+        //set the data to what the storage contains
+        val dateData = binding.root.context.getSharedPreferences(selectedDate, MODE_PRIVATE)
+
+        if(dateData.contains("sleep"))
+            binding.homeSleepData.text = dateData.getInt("sleep", -1).toString()
+        else
+            binding.homeSleepData.text = "0"
+
+        if(dateData.contains("steps"))
+            binding.homeStepData.text = dateData.getInt("steps", -1).toString()
+        else
+            binding.homeStepData.text = "0"
 
         //when the selected date changes
         binding.mainCalendar.setOnDateChangeListener { calView: CalendarView, year: Int, month: Int, dayOfMonth: Int ->
@@ -61,6 +78,20 @@ class HomeFragment : Fragment() {
 
             //format the selected date and update the label accordingly
             binding.homeDate.text = sb.toString()
+            selectedDate = sdf.format(binding.mainCalendar.date).replace("/", "")
+
+            val dateData = binding.root.context.getSharedPreferences(selectedDate, MODE_PRIVATE)
+
+            //check if we have data for this date
+            if(dateData.contains("sleep"))
+                binding.homeSleepData.text = dateData.getInt("sleep", -1).toString()
+            else
+                binding.homeSleepData.text = "0"
+
+            if(dateData.contains("steps"))
+                binding.homeStepData.text = dateData.getInt("steps", -1).toString()
+            else
+                binding.homeStepData.text = "0"
         }
 
         binding.homeSleepButton.setOnClickListener() {
@@ -83,7 +114,13 @@ class HomeFragment : Fragment() {
                 hideSleepInput()
 
                 //update the sleep hours display
-                binding.homeSleepData.text = slider.value.toString()
+                binding.homeSleepData.text = slider.value.toInt().toString()
+
+                //update the shared preferences
+                val prefs = binding.root.context.getSharedPreferences(selectedDate, MODE_PRIVATE)
+                val editor = prefs.edit()
+                editor.putInt("sleep", slider.value.toInt())
+                editor.apply()
             }
         })
 
@@ -99,6 +136,13 @@ class HomeFragment : Fragment() {
         binding.homeSubmitSteps.setOnClickListener() {
             //update the display
             binding.homeStepData.text = binding.stepDisplay.text
+
+            //update the storage
+            val prefs = binding.root.context.getSharedPreferences(selectedDate, MODE_PRIVATE)
+            val editor = prefs.edit()
+            editor.putInt("steps", (binding.stepsKnob.state*1000))
+            editor.apply()
+
             hideStepInput()
         }
 
@@ -113,6 +157,7 @@ class HomeFragment : Fragment() {
     fun loadSleepInput() {
         binding.inputLayout.visibility = View.GONE
         binding.sleepEntry.visibility = View.VISIBLE
+        binding.sleepSlider.value = 0.0F
     }
 
     //hide the ui for sleep input
