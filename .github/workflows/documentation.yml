@@ -22,13 +22,5 @@ jobs:
           git config --local user.name "Actions Bot"
           git add -f docs
           git diff-index --quiet HEAD || git commit -m "[Auto] update docs"
-          git push -u origin master
-          
-      - name: Force push to destination branch
-        uses: ad-m/github-push-action@v0.5.0
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: gh-pages
-          force: true
-          directory: docs
+          git push origin master:gh-pages --force
   
