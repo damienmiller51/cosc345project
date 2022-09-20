@@ -19,12 +19,18 @@ import java.util.*
 
 /**
  * The fragment class containing the framework for the Home page. The default destination for the app.
+ * @author Damien Miller
  */
 class HomeFragment : Fragment() {
 
-    //date formatter
+    /**
+     * The app's date formatter.
+     */
     val sdf = SimpleDateFormat("dd/MM/yyyy")
 
+    /**
+     * The date currently selected in the calendar.
+     */
     var selectedDate = sdf.format(Date()).replace("/", "")
 
     private var _binding: HomeFragmentBinding? = null
@@ -33,6 +39,13 @@ class HomeFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
+    /**
+     * Create the Home page and inflate the layout.
+     * @param inflater The layout inflater.
+     * @param container The view container.
+     * @param savedInstanceState -
+     * @return The outermost view from the layout file.
+     */
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
@@ -43,6 +56,11 @@ class HomeFragment : Fragment() {
 
     }
 
+    /**
+     * Called immediately after the Home page is created.
+     * @param view The Home view.
+     * @param savedInstanceState -
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -148,30 +166,42 @@ class HomeFragment : Fragment() {
 
     }
 
+    /**
+     * Called when the view is deconstructed.
+     */
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 
-    //load the ui for sleep input
+    /**
+     * Loads the ui for the sleep input.
+     */
     fun loadSleepInput() {
         binding.inputLayout.visibility = View.GONE
         binding.sleepEntry.visibility = View.VISIBLE
         binding.sleepSlider.value = 0.0F
     }
 
-    //hide the ui for sleep input
+    /**
+     * Hides the ui for the sleep input.
+     */
     fun hideSleepInput() {
         binding.inputLayout.visibility = View.VISIBLE
         binding.sleepEntry.visibility = View.GONE
     }
 
-    //load the ui for step input
+    /**
+     * Loads the ui for the step input.
+     */
     fun loadStepInput() {
         binding.inputLayout.visibility = View.GONE
         binding.stepEntry.visibility = View.VISIBLE
     }
 
+    /**
+     * Hides the ui for the step input.
+     */
     fun hideStepInput() {
         binding.inputLayout.visibility = View.VISIBLE
         binding.stepEntry.visibility = View.GONE
