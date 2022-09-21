@@ -85,7 +85,9 @@ class SettingsFragment : Fragment() {
     fun clearUserData(){
         val sharedPreferencesPath = File(binding.root.context.filesDir.parentFile!!.absolutePath + File.separator + "shared_prefs")
         sharedPreferencesPath.listFiles()?.forEach { file ->
-            binding.root.context.getSharedPreferences(file.nameWithoutExtension, Context.MODE_PRIVATE).edit().clear().apply()
+            //check to make sure the data is date data and not anything else
+            if(file.nameWithoutExtension.length == 8 && file.nameWithoutExtension[4].equals('2'))
+                binding.root.context.getSharedPreferences(file.nameWithoutExtension, Context.MODE_PRIVATE).edit().clear().apply()
         }
     }
 
