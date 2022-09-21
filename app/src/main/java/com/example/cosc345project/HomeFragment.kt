@@ -3,9 +3,7 @@ package com.example.cosc345project
 import android.content.Context.MODE_PRIVATE
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
-import android.view.View.OnTouchListener
 import android.view.ViewGroup
 import android.widget.CalendarView
 import androidx.fragment.app.Fragment
@@ -13,7 +11,6 @@ import com.example.cosc345project.databinding.HomeFragmentBinding
 import com.google.android.material.slider.Slider
 import it.beppi.knoblibrary.Knob.OnStateChanged
 import java.text.SimpleDateFormat
-import java.time.LocalDateTime
 import java.util.*
 
 
@@ -22,22 +19,24 @@ import java.util.*
  * @author Damien Miller
  */
 class HomeFragment : Fragment() {
-
-    /**
-     * The app's date formatter.
-     */
-    val sdf = SimpleDateFormat("dd/MM/yyyy")
-
-    /**
-     * The date currently selected in the calendar.
-     */
-    var selectedDate = sdf.format(Date()).replace("/", "")
-
     private var _binding: HomeFragmentBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+
+    //get the settings for the app
+
+
+    /**
+     * The app's date formatter.
+     */
+    var sdf = SimpleDateFormat("dd/MM/yyyy")
+
+    /**
+     * The date currently selected in the calendar.
+     */
+    var selectedDate = sdf.format(Date()).replace("/", "")
 
     /**
      * Create the Home page and inflate the layout.
@@ -64,6 +63,12 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //update the sdf if a setting is found.
+        val settings = binding.root.context.getSharedPreferences("settings", MODE_PRIVATE)
+        if(settings.contains("format"))
+            sdf = SimpleDateFormat(settings.getString("format", ""))
+
+
         //set the label to the current day
         val sb = StringBuilder()
         sb.append(getString(R.string.date_label)).append(" ").append(sdf.format(binding.mainCalendar.date))
@@ -81,6 +86,18 @@ class HomeFragment : Fragment() {
             binding.homeStepData.text = dateData.getInt("steps", -1).toString()
         else
             binding.homeStepData.text = "0"
+
+        if(dateData.contains("mood")) {
+            if (dateData.getInt("mood", -1) == 1) {
+                binding.homeMood.setImageResource(R.drawable.mood_frown)
+            } else if (dateData.getInt("mood", -1) == 2) {
+                binding.homeMood.setImageResource(R.drawable.mood_average)
+            } else {
+                binding.homeMood.setImageResource(R.drawable.mood_smile)
+            }
+        } else {
+            binding.homeMood.setImageResource(it.beppi.knoblibrary.R.drawable.bg_circle)
+        }
 
         //when the selected date changes
         binding.mainCalendar.setOnDateChangeListener { calView: CalendarView, year: Int, month: Int, dayOfMonth: Int ->
@@ -110,17 +127,33 @@ class HomeFragment : Fragment() {
                 binding.homeStepData.text = dateData.getInt("steps", -1).toString()
             else
                 binding.homeStepData.text = "0"
+
+            if(dateData.contains("mood")) {
+                if (dateData.getInt("mood", -1) == 1) {
+                    binding.homeMood.setImageResource(R.drawable.mood_frown)
+                } else if (dateData.getInt("mood", -1) == 2) {
+                    binding.homeMood.setImageResource(R.drawable.mood_average)
+                } else {
+                    binding.homeMood.setImageResource(R.drawable.mood_smile)
+                }
+            } else {
+                binding.homeMood.setImageResource(it.beppi.knoblibrary.R.drawable.bg_circle)
+            }
         }
 
-        binding.homeSleepButton.setOnClickListener() {
+        binding.homeSleepButton.setOnClickListener {
             loadSleepInput()
         }
 
-        binding.homeStepButton.setOnClickListener() {
+        binding.homeStepButton.setOnClickListener {
             loadStepInput()
         }
 
-        //touch listener for our slider
+        binding.homeMoodButton.setOnClickListener {
+            loadMoodInput()
+        }
+
+        //touch listener for our steps slider
         binding.sleepSlider.addOnSliderTouchListener(object: Slider.OnSliderTouchListener {
             //required for abstract class
             override fun onStartTrackingTouch(slider: Slider) {
@@ -142,16 +175,56 @@ class HomeFragment : Fragment() {
             }
         })
 
-        binding.sleepSlider.addOnChangeListener() { slider, value, fromUSer ->
+        binding.moodSlider.addOnSliderTouchListener(object: Slider.OnSliderTouchListener {
+            //required for abstract class
+            override fun onStartTrackingTouch(slider: Slider) {
+
+            }
+
+            //when a value is selected, hide the input
+            override fun onStopTrackingTouch(slider: Slider) {
+                hideMoodInput()
+
+                //update the mood display
+                //1 = bad, 2 = average, 3 = happy
+                if(slider.value == 1.0F) {
+                    binding.homeMood.setImageResource(R.drawable.mood_frown)
+                } else if (slider.value == 2.0F) {
+                    binding.homeMood.setImageResource(R.drawable.mood_average)
+                } else {
+                    binding.homeMood.setImageResource(R.drawable.mood_smile)
+                }
+
+                //update the shared preferences
+                val prefs = binding.root.context.getSharedPreferences(selectedDate, MODE_PRIVATE)
+                val editor = prefs.edit()
+                editor.putInt("mood", slider.value.toInt())
+                editor.apply()
+            }
+        })
+
+        binding.sleepSlider.addOnChangeListener { slider, value, fromUSer ->
             //update the display
             binding.sleepDisplay.text = (slider.value).toString()
+        }
+
+        binding.moodSlider.addOnChangeListener { slider, value, fromUSer ->
+            //update the display
+            //1 = bad, 2 = average, 3 = happy
+            if(slider.value == 1.0F) {
+                binding.moodDisplay.setImageResource(R.drawable.mood_frown)
+            } else if (slider.value == 2.0F) {
+                binding.moodDisplay.setImageResource(R.drawable.mood_average)
+            } else {
+                binding.moodDisplay.setImageResource(R.drawable.mood_smile)
+            }
         }
 
         binding.stepsKnob.setOnStateChanged(OnStateChanged {
             binding.stepDisplay.text = (binding.stepsKnob.state*1000).toString()
         })
 
-        binding.homeSubmitSteps.setOnClickListener() {
+        binding.homeSubmitSteps.setOnClickListener {
             //update the display
             binding.homeStepData.text = binding.stepDisplay.text
 
@@ -205,6 +278,22 @@ class HomeFragment : Fragment() {
     fun hideStepInput() {
         binding.inputLayout.visibility = View.VISIBLE
         binding.stepEntry.visibility = View.GONE
+    }
+
+    /**
+     * Loads the ui for the mood input.
+     */
+    fun loadMoodInput() {
+        binding.inputLayout.visibility = View.GONE
+        binding.moodEntry.visibility = View.VISIBLE
+    }
+
+    /**
+     * Hides the ui for the mood input.
+     */
+    fun hideMoodInput() {
+        binding.inputLayout.visibility = View.VISIBLE
+        binding.moodEntry.visibility = View.GONE
     }
 
 }

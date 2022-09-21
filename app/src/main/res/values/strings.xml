@@ -8,9 +8,11 @@
     <string name="date_label">Selected date:</string>
     <string name="home_sleep_label">Hours of sleep:</string>
     <string name="home_step_label">Steps:</string>
+    <string name="home_mood_label">General mood:</string>
     <string name="home_modify_button">Update</string>
     <string name="home_sleep_entry_label">How many hours of sleep did you get?</string>
     <string name="home_step_entry_label">How many steps did you do?</string>
+    <string name="home_mood_entry_label">How did you feel on this day?</string>
 
     <!-- Analytics page strings -->
     <string name="analytics_fragment_label">Analytics</string>
@@ -19,4 +21,8 @@
 
     <!-- Settings page strings -->
     <string name="settings_fragment_label">Settings</string>
+    <string name="settings_date_label">Use American date format</string>
+    <string name="settings_clear_label">Clear user data</string>
+    <string name="settings_theme_label">Toggle night mode</string>
+    <string name="settings_clear_button">Clear</string>
 </resources>
