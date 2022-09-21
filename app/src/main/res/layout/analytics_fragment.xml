@@ -24,7 +24,7 @@
                 android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/anaylsis_sleep">
+                app:layout_constraintTop_toBottomOf="@+id/analysis_sleep">
 
                 <TextView
                     android:id="@+id/analytics_steps_label"
@@ -39,17 +39,14 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <com.jjoe64.graphview.helper.GraphViewXML
+                <com.jjoe64.graphview.GraphView
                     android:id="@+id/analytics_steps_graph"
                     android:layout_width="316dp"
-                    android:layout_height="220dp"
-                    android:layout_marginStart="16dp"
+                    android:layout_height="220dip"
                     android:layout_marginTop="11dp"
-                    android:layout_marginEnd="15dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/analytics_steps_label"
-                    app:seriesData="0=0;2=0;3=0;4=0" />
+                    app:layout_constraintTop_toBottomOf="@+id/analytics_steps_label" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
@@ -68,7 +65,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/anaylsis_sleep"
+                android:id="@+id/analysis_sleep"
                 android:layout_width="349dp"
                 android:layout_height="330dp"
                 android:layout_marginStart="67dp"
@@ -80,9 +77,9 @@
 
                 <TextView
                     android:id="@+id/analytics_sleep_label"
-                    android:layout_width="107dp"
-                    android:layout_height="28dp"
-                    android:layout_marginStart="121dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="120dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="121dp"
                     android:text="@string/analytics_sleep_label"
@@ -92,20 +89,17 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <com.jjoe64.graphview.helper.GraphViewXML
+                <com.jjoe64.graphview.GraphView
                     android:id="@+id/analytics_sleep_graph"
-                    android:layout_width="318dp"
-                    android:layout_height="220dp"
-                    android:layout_marginStart="16dp"
+                    android:layout_width="316dp"
+                    android:layout_height="220dip"
                     android:layout_marginTop="11dp"
-                    android:layout_marginEnd="15dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/analytics_sleep_label"
-                    app:seriesData="0=0;2=0;3=0;4=0" />
+                    app:layout_constraintTop_toBottomOf="@+id/analytics_sleep_label" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
