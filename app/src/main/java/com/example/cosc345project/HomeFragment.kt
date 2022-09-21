@@ -63,15 +63,20 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        var labelSdf = SimpleDateFormat("dd/MM/yyyy")
+
+        //set the max date on the calendar
+        binding.mainCalendar.maxDate = Date().time
+
         //update the sdf if a setting is found.
         val settings = binding.root.context.getSharedPreferences("settings", MODE_PRIVATE)
         if(settings.contains("format"))
-            sdf = SimpleDateFormat(settings.getString("format", ""))
+            labelSdf = SimpleDateFormat(settings.getString("format", ""))
 
 
         //set the label to the current day
         val sb = StringBuilder()
-        sb.append(getString(R.string.date_label)).append(" ").append(sdf.format(binding.mainCalendar.date))
+        sb.append(getString(R.string.date_label)).append(" ").append(labelSdf.format(binding.mainCalendar.date))
         binding.homeDate.text = sb.toString()
 
         //set the data to what the storage contains
@@ -109,7 +114,7 @@ class HomeFragment : Fragment() {
 
             //build label text
             sb.clear()
-            sb.append(getString(R.string.date_label)).append(" ").append(sdf.format(binding.mainCalendar.date))
+            sb.append(getString(R.string.date_label)).append(" ").append(labelSdf.format(binding.mainCalendar.date))
 
             //format the selected date and update the label accordingly
             binding.homeDate.text = sb.toString()
