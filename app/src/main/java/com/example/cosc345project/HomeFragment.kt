@@ -1,10 +1,13 @@
 package com.example.cosc345project
 
+import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.os.Bundle
+import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.CalendarView
 import androidx.fragment.app.Fragment
 import com.example.cosc345project.databinding.HomeFragmentBinding
@@ -36,7 +39,7 @@ class HomeFragment : Fragment() {
     /**
      * The date currently selected in the calendar.
      */
-    var selectedDate = sdf.format(Date()).replace("/", "")
+    var selectedDate = sdf.format(Date())
 
     /**
      * Create the Home page and inflate the layout.
@@ -80,7 +83,7 @@ class HomeFragment : Fragment() {
         binding.homeDate.text = sb.toString()
 
         //set the data to what the storage contains
-        val dateData = binding.root.context.getSharedPreferences(selectedDate, MODE_PRIVATE)
+        val dateData = binding.root.context.getSharedPreferences(selectedDate.replace("/", ""), MODE_PRIVATE)
 
         if(dateData.contains("sleep"))
             binding.homeSleepData.text = dateData.getInt("sleep", -1).toString()
@@ -106,6 +109,16 @@ class HomeFragment : Fragment() {
 
         //when the selected date changes
         binding.mainCalendar.setOnDateChangeListener { calView: CalendarView, year: Int, month: Int, dayOfMonth: Int ->
+            //check to make sure we aren't entering information on date change
+            //if we are - pull back to the default input layout
+            if(binding.sleepEntry.visibility == View.VISIBLE)
+                toggleSleepInput()
+
+            if(binding.stepEntry.visibility == View.VISIBLE)
+                toggleStepInput()
+
+            if(binding.moodEntry.visibility == View.VISIBLE)
+                toggleMoodInput()
 
             //Create a calendar instance and set it's date to what was selected
             val calendar: Calendar = Calendar.getInstance()
@@ -118,9 +131,9 @@ class HomeFragment : Fragment() {
 
             //format the selected date and update the label accordingly
             binding.homeDate.text = sb.toString()
-            selectedDate = sdf.format(binding.mainCalendar.date).replace("/", "")
+            selectedDate = sdf.format(binding.mainCalendar.date)
 
-            val dateData = binding.root.context.getSharedPreferences(selectedDate, MODE_PRIVATE)
+            val dateData = binding.root.context.getSharedPreferences(selectedDate.replace("/", ""), MODE_PRIVATE)
 
             //check if we have data for this date
             if(dateData.contains("sleep"))
@@ -147,15 +160,35 @@ class HomeFragment : Fragment() {
         }
 
         binding.homeSleepButton.setOnClickListener {
-            loadSleepInput()
+            toggleSleepInput()
         }
 
         binding.homeStepButton.setOnClickListener {
-            loadStepInput()
+           toggleStepInput()
         }
 
         binding.homeMoodButton.setOnClickListener {
-            loadMoodInput()
+            toggleMoodInput()
+        }
+
+        binding.homeDiaryButton.setOnClickListener {
+            toggleDiary()
+        }
+
+        binding.homeDiaryDone.setOnClickListener {
+            toggleDiary()
+        }
+
+        binding.homeDiaryEdit.setOnClickListener {
+            binding.homeDiaryEditor.visibility = View.VISIBLE
+            binding.homeDiaryView.visibility = View.GONE
+
+            val prefs = binding.root.context.getSharedPreferences(selectedDate.replace("/", ""), Context.MODE_PRIVATE)
+            if(prefs.contains("diary")) {
+                binding.homeDiaryEditor.setText(prefs.getString("diary", ""))
+            } else {
+                binding.homeDiaryEditor.setText("")
+            }
         }
 
         //touch listener for our steps slider
@@ -167,13 +200,13 @@ class HomeFragment : Fragment() {
 
             //when a value is selected, hide the input
             override fun onStopTrackingTouch(slider: Slider) {
-                hideSleepInput()
+                toggleSleepInput()
 
                 //update the sleep hours display
                 binding.homeSleepData.text = slider.value.toInt().toString()
 
                 //update the shared preferences
-                val prefs = binding.root.context.getSharedPreferences(selectedDate, MODE_PRIVATE)
+                val prefs = binding.root.context.getSharedPreferences(selectedDate.replace("/", ""), MODE_PRIVATE)
                 val editor = prefs.edit()
                 editor.putInt("sleep", slider.value.toInt())
                 editor.apply()
@@ -188,7 +221,7 @@ class HomeFragment : Fragment() {
 
             //when a value is selected, hide the input
             override fun onStopTrackingTouch(slider: Slider) {
-                hideMoodInput()
+                toggleMoodInput()
 
                 //update the mood display
                 //1 = bad, 2 = average, 3 = happy
@@ -201,7 +234,7 @@ class HomeFragment : Fragment() {
                 }
 
                 //update the shared preferences
-                val prefs = binding.root.context.getSharedPreferences(selectedDate, MODE_PRIVATE)
+                val prefs = binding.root.context.getSharedPreferences(selectedDate.replace("/", ""), MODE_PRIVATE)
                 val editor = prefs.edit()
                 editor.putInt("mood", slider.value.toInt())
                 editor.apply()
@@ -230,16 +263,7 @@ class HomeFragment : Fragment() {
         })
 
         binding.homeSubmitSteps.setOnClickListener {
-            //update the display
-            binding.homeStepData.text = binding.stepDisplay.text
-
-            //update the storage
-            val prefs = binding.root.context.getSharedPreferences(selectedDate, MODE_PRIVATE)
-            val editor = prefs.edit()
-            editor.putInt("steps", (binding.stepsKnob.state*1000))
-            editor.apply()
-
-            hideStepInput()
+            toggleStepInput()
         }
 
     }
@@ -253,52 +277,87 @@ class HomeFragment : Fragment() {
     }
 
     /**
-     * Loads the ui for the sleep input.
+     * Toggles the sleep input ui.
      */
-    fun loadSleepInput() {
-        binding.inputLayout.visibility = View.GONE
-        binding.sleepEntry.visibility = View.VISIBLE
-        binding.sleepSlider.value = 0.0F
+    fun toggleSleepInput() {
+        if(binding.sleepEntry.visibility == View.GONE) {
+            binding.inputLayout.visibility = View.GONE
+            binding.sleepEntry.visibility = View.VISIBLE
+            binding.sleepSlider.value = 0.0F
+        } else {
+            binding.inputLayout.visibility = View.VISIBLE
+            binding.sleepEntry.visibility = View.GONE
+        }
     }
 
     /**
-     * Hides the ui for the sleep input.
+     * Toggles the step input ui.
      */
-    fun hideSleepInput() {
-        binding.inputLayout.visibility = View.VISIBLE
-        binding.sleepEntry.visibility = View.GONE
+    fun toggleStepInput() {
+        if(binding.stepEntry.visibility == View.GONE) {
+            binding.inputLayout.visibility = View.GONE
+            binding.stepEntry.visibility = View.VISIBLE
+        } else {
+            //update the display
+            binding.homeStepData.text = binding.stepDisplay.text
+
+            //update the storage
+            val prefs = binding.root.context.getSharedPreferences(selectedDate.replace("/", ""), MODE_PRIVATE)
+            val editor = prefs.edit()
+            editor.putInt("steps", (binding.stepsKnob.state*1000))
+            editor.apply()
+
+            //change visibilities
+            binding.inputLayout.visibility = View.VISIBLE
+            binding.stepEntry.visibility = View.GONE
+        }
     }
 
     /**
-     * Loads the ui for the step input.
+     * Toggles the mood input ui.
      */
-    fun loadStepInput() {
-        binding.inputLayout.visibility = View.GONE
-        binding.stepEntry.visibility = View.VISIBLE
+    fun toggleMoodInput() {
+        if(binding.moodEntry.visibility == View.GONE) {
+            binding.inputLayout.visibility = View.GONE
+            binding.moodEntry.visibility = View.VISIBLE
+        } else {
+            binding.inputLayout.visibility = View.VISIBLE
+            binding.moodEntry.visibility = View.GONE
+        }
     }
 
     /**
-     * Hides the ui for the step input.
+     * Toggles the diary ui.
      */
-    fun hideStepInput() {
-        binding.inputLayout.visibility = View.VISIBLE
-        binding.stepEntry.visibility = View.GONE
-    }
+    fun toggleDiary() {
+        val prefs = binding.root.context.getSharedPreferences(selectedDate.replace("/", ""), Context.MODE_PRIVATE)
+        if(binding.diaryLayout.visibility == View.GONE) {
+            //update the date display
+            val sb = StringBuilder()
+            binding.homeDiaryDateLabel.text = "Viewing journal for:"
+            binding.homeDiaryDateLabel.text = sb.append(binding.homeDiaryDateLabel.text).append(" ").append(selectedDate).toString()
 
-    /**
-     * Loads the ui for the mood input.
-     */
-    fun loadMoodInput() {
-        binding.inputLayout.visibility = View.GONE
-        binding.moodEntry.visibility = View.VISIBLE
-    }
+            //update the text box if we have any data saved
+            if(prefs.contains("diary") && !prefs.getString("diary", "").equals("")) {
+                binding.homeDiaryView.text = prefs.getString("diary", "")
+            } else {
+                binding.homeDiaryView.text = "There is currently no journal entry for this day."
+            }
+            binding.homeScrollLayout.visibility = View.GONE
+            binding.diaryLayout.visibility = View.VISIBLE
+        } else {
+            //save our data
+            prefs.edit().putString("diary", binding.homeDiaryEditor.text.toString()).apply()
 
-    /**
-     * Hides the ui for the mood input.
-     */
-    fun hideMoodInput() {
-        binding.inputLayout.visibility = View.VISIBLE
-        binding.moodEntry.visibility = View.GONE
+            binding.homeDiaryEditor.visibility = View.GONE
+            binding.homeDiaryView.visibility = View.VISIBLE
+            binding.homeScrollLayout.visibility = View.VISIBLE
+            binding.diaryLayout.visibility = View.GONE
+
+            //hide keyboard
+            val imm = binding.root.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(view?.windowToken, 0)
+        }
     }
 
 }
