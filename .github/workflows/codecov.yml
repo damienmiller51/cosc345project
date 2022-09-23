@@ -1,12 +1,3 @@
-{
-  "fixes": [
-      "/home/runner/work/cosc345project/cosc345project>/::"
-  ],
-  "codecov": {
-    "disable_default_path_fixes": true
-  }
-}
-
 name: CI Codecov
 
 # Controls when the action will run.
@@ -35,12 +26,6 @@ jobs:
         with:
           api-level: 29
           script: ./gradlew connectedCheck
-
-      - name: Make gradlew executable
-          run: chmod +x ./gradlew
-
-      - name: Build Gradle
-          run: ./gradlew build
 
       # run: ./gradlew testDebugUnitTest
 
