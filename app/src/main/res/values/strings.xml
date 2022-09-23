@@ -23,6 +23,7 @@
     <string name="analytics_fragment_label">Analytics</string>
     <string name="analytics_sleep_label">Daily Sleep</string>
     <string name="analytics_steps_label">Daily Steps</string>
+    <string name="analytics_mood_label">Daily Mood</string>
 
     <!-- Settings page strings -->
     <string name="settings_fragment_label">Settings</string>
