@@ -63,6 +63,7 @@ class HomeFragment : Fragment() {
      * @param view The Home view.
      * @param savedInstanceState -
      */
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
