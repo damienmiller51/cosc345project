@@ -36,6 +36,12 @@ jobs:
           api-level: 29
           script: ./gradlew connectedCheck
 
+      - name: Make gradlew executable
+          run: chmod +x ./gradlew
+
+      - name: Build Gradle
+          run: ./gradlew build
+
       # run: ./gradlew testDebugUnitTest
 
       - name: generate report
