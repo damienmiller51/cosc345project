@@ -1,11 +1,4 @@
-{
-  "fixes": [
-      "/home/runner/work/CodeCoverage_Example/CodeCoverage_Example>/::"
-  ],
-  "codecov": {
-    "disable_default_path_fixes": true
-  }
-}
+
 
 name: CI Codecov
 
@@ -60,3 +53,12 @@ jobs:
         uses: codecov/codecov-action@v2
         with:
           files: "app/build/reports/coverage/debug/report.xml"
+
+  {
+    "fixes": [
+        "/home/runner/work/CodeCoverage_Example/CodeCoverage_Example>/::"
+    ],
+    "codecov": {
+      "disable_default_path_fixes": true
+    }
+  }
