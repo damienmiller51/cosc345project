@@ -7,7 +7,7 @@
   }
 }
 
-name: CI
+name: CI Codecov
 
 # Controls when the action will run.
 on:
