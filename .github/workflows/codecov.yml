@@ -38,16 +38,16 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: report
-          path: app/build/reports/coverage/debug
+          path: app/build/reports
 
 
       - name: Download Test Reports Folder
         uses: actions/download-artifact@v2
         with:
           name: report
-          path: app/build/reports/coverage/debug
+          path: app/build/reports
 
       - name: Upload Test Report
         uses: codecov/codecov-action@v2
         with:
-          files: "app/build/reports/coverage/debug/report.xml"
+          files: "app/build/reports/report.xml"
