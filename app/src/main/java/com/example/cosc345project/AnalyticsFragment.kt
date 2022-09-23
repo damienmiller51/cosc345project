@@ -138,7 +138,7 @@ class AnalyticsFragment : Fragment() {
         for (i in 0..6) {
             val date = sdf.format(weekArray[i]).replace("/", "")
             val dateData = binding.root.context.getSharedPreferences(date,MODE_PRIVATE)
-            val moodData = dateData.getInt("water", 0)
+            val moodData = dateData.getInt("mood", 0)
             moodDailyAverage += moodData
             seriesMood.appendData(DataPoint(weekArray[i], moodData.toDouble()),
                 true, 7)
